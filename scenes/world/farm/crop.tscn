@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/crop.gd" id="1_crop"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_crop"]
+size = Vector2(16, 16)
+
+[node name="Crop" type="Node2D"]
+script = ExtResource("1_crop")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_crop")
+modulate = Color(0.25, 0.85, 0.3, 1)
+scale = Vector2(0.4, 0.4)

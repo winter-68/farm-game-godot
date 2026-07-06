@@ -1,0 +1,19 @@
+# Godot 4 generated files
+.godot/
+*.translation
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# User data (saves, logs)
+# Note: user:// maps to AppData on Windows, not tracked here anyway
+# But if you ever copy saves into the project, exclude them:
+saves/
+
+# Temporary / build artifacts
+*.tmp
+*.log
+export_presets.cfg

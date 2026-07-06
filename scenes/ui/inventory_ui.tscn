@@ -1,0 +1,293 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/inventory_ui.gd" id="1_inventory_ui"]
+
+[node name="InventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_inventory_ui")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = -70.0
+offset_right = 114.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "背包"
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 3
+columns = 6
+
+[node name="Slot0" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "锄头"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot1" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "水壶"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "种子×10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot3" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot4" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot5" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot5"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot6" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot6"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot7" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot7"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot8" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot8"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot9" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot9"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot10" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot10"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot11" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot11"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot12" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot12"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot13" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot13"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot14" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot14"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot15" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot15"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot16" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot16"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot17" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot17"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot18" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot18"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot19" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot19"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot20" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot20"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot21" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot21"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot22" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot22"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot23" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/Grid"]
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Grid/Slot23"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+vertical_alignment = 1

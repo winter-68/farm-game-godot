@@ -1,0 +1,21 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/world.tscn" id="1_world"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hotbar.tscn" id="3_hotbar"]
+[ext_resource type="PackedScene" path="res://scenes/ui/inventory_ui.tscn" id="4_inventory_ui"]
+[ext_resource type="PackedScene" path="res://scenes/ui/shop_ui.tscn" id="5_shop_ui"]
+
+[node name="Main" type="Node"]
+
+[node name="World" parent="." instance=ExtResource("1_world")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("2_hud")]
+
+[node name="Hotbar" parent="UI" instance=ExtResource("3_hotbar")]
+
+[node name="InventoryUI" parent="UI" instance=ExtResource("4_inventory_ui")]
+
+[node name="ShopUI" parent="UI" instance=ExtResource("5_shop_ui")]

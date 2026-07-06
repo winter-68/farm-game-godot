@@ -1,0 +1,24 @@
+; Atlas coordinates: GROUND=(0,0), TILLED=(1,0), WATERED=(2,0).
+[gd_resource type="TileSet" load_steps=4 format=3]
+
+[sub_resource type="Gradient" id="Gradient_placeholder_atlas"]
+offsets = PackedFloat32Array(0, 0.333332, 0.333334, 0.666665, 0.666667, 1)
+colors = PackedColorArray(0.309804, 0.615686, 0.333333, 1, 0.309804, 0.615686, 0.333333, 1, 0.607843, 0.415686, 0.243137, 1, 0.607843, 0.415686, 0.243137, 1, 0.372549, 0.27451, 0.188235, 1, 0.372549, 0.27451, 0.188235, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_placeholder_atlas"]
+gradient = SubResource("Gradient_placeholder_atlas")
+width = 48
+height = 16
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_placeholder"]
+texture = SubResource("GradientTexture2D_placeholder_atlas")
+texture_region_size = Vector2i(16, 16)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[resource]
+tile_size = Vector2i(16, 16)
+sources/0 = SubResource("TileSetAtlasSource_placeholder")
