@@ -7,5 +7,6 @@ script = ExtResource("1_crop")
 crop_id = &"crop_greenbean"
 display_name = "Green Bean"
 produce_item_id = &"produce_greenbean"
-days_per_stage = 1
+days_per_stage = 2
 stage_textures = Array[Texture2D]([null, null, null])
+allowed_seasons = Array[String]([])

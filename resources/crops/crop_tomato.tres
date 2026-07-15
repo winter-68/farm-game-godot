@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/crop_data.gd" id="1_crop"]
+
+[resource]
+script = ExtResource("1_crop")
+crop_id = &"crop_tomato"
+display_name = "番茄"
+produce_item_id = &"produce_tomato"
+days_per_stage = 3
+stage_textures = Array[Texture2D]([null, null, null, null])
+regrows = true
+regrow_to_stage = 1
+produce_amount = 1
+allowed_seasons = Array[String](["夏"])

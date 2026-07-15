@@ -1,6 +1,6 @@
 extends Node
 
-const SLOT_COUNT := 24
+const SLOT_COUNT := 30
 
 var money: int = 0
 var slots: Array = []
@@ -170,14 +170,13 @@ func new_game() -> void:
 
 
 func _setup_new_game() -> void:
-	money = 500
+	money = 200
 	selected_index = 0
 	slots.clear()
 	for i in range(SLOT_COUNT):
 		slots.append(_empty_slot())
 	slots[0] = {"item_id": &"tool_hoe", "quantity": 1}
 	slots[1] = {"item_id": &"tool_wateringcan", "quantity": 1}
-	slots[2] = {"item_id": &"seed_greenbean", "quantity": 10}
 	call_deferred("_emit_state_changed")
 
 

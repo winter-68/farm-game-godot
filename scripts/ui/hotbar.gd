@@ -16,6 +16,12 @@ const ITEM_SHORT_NAMES := {
 	&"tool_hoe": "锄头",
 	&"tool_wateringcan": "水壶",
 	&"seed_greenbean": "种子",
+	&"seed_potato": "土豆种子",
+	&"produce_potato": "土豆",
+	&"seed_tomato": "番茄种子",
+	&"produce_tomato": "番茄",
+	&"seed_strawberry": "草莓种子",
+	&"produce_strawberry": "草莓",
 }
 const NORMAL_COLOR := Color(0.12, 0.15, 0.18, 0.9)
 const SELECTED_COLOR := Color(0.82, 0.58, 0.16, 0.95)

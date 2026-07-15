@@ -28,7 +28,7 @@
 
 **里程碑 B**：完成「翻地→播种→浇水→跨天成长→收获」完整农事闭环。
 
-## 批次 C：经济、UI 与存档 ✅（任务卡已就绪）
+## 批次 C：经济、UI 与存档 ✅（已完成）
 
 | ID | 任务 | 任务卡 |
 |----|------|--------|
@@ -39,4 +39,39 @@
 | T16 | 读取存档并重建世界/UI | [T16](./tasks/T16_load.md) |
 | T17 | 主菜单：新游戏 / 继续 / 退出（收尾） | [T17](./tasks/T17_main_menu.md) |
 
+## 批次 D：更多作物 + 季节系统 ✅（已完成）
+
+| ID | 任务 | 任务卡 |
+|----|------|--------|
+| T18 | 四季循环 + HUD 显示季节 | [T18](./tasks/T18_season_system.md) |
+| T19 | 新作物数据（土豆/番茄/草莓） | [T19](./tasks/T19_new_crops.md) |
+| T20 | 季节限制种植 + 商店季节过滤 | [T20](./tasks/T20_season_filter.md) |
+| T21 | 跨季提示 + 快捷栏新物品显示 | [T21](./tasks/T21_season_notice.md) |
+| T22 | 背包 UI 新物品显示 | [T22](./tasks/T22_inventory_new_items.md) |
+| T23 | 经济平衡调整 + 起始资源 | [T23](./tasks/T23_balance.md) |
+
 **里程碑 C（MVP 完成）**：完整核心循环 + 经济 + 存档，达成 GDD 第 9 节 Vertical Slice 验收。
+
+## 批次 E：天气系统 🌧️✅（已完成）
+
+按季节概率每天随机天气；唯一玩法效果=雨天自动浇水（纯正向、无惩罚）。
+
+| ID | 任务 | 任务卡 |
+|----|------|--------|
+| T24 | WeatherManager（随机+信号+存档）+ HUD 显示天气 | [T24](./tasks/T24_weather_system.md) |
+| T25 | 雨天自动浇灌所有耕地（接成长闭环） | [T25](./tasks/T25_rain_autowater.md) |
+| T26 | 雨/雪视觉 overlay + 今日天气提示 | [T26](./tasks/T26_weather_visuals.md) |
+
+**架构铁律**：WeatherManager autoload 必须注册在 FarmManager **之后**（保证雨水在 FarmManager 清浇水标记之后补上）；tile 所有权仍归 FarmManager（`water_all_tilled()`）；天气数据/overlay 表现分离，靠 `weather_changed` 信号解耦。
+
+## 批次 F：收集系统 📖✅（已完成）
+
+图鉴（首次收获解锁）+ 成就（里程碑长线目标）。收集类长线动力。
+
+| ID | 任务 | 任务卡 |
+|----|------|--------|
+| T27 | CollectionManager（图鉴/统计/成就+信号+存档+读档守卫） | [T27](./tasks/T27_collection_manager.md) |
+| T28 | 收集面板 UI（图鉴网格 + 成就列表）+ 按键 C | [T28](./tasks/T28_collection_panel.md) |
+| T29 | 解锁提示 toast（发现新作物 / 达成成就） | [T29](./tasks/T29_collection_toast.md) |
+
+**架构铁律**：CollectionManager autoload 注册在 WeatherManager 后、SaveManager 前；只读 ItemDatabase/TimeManager、只监听 EventBus，不搜树、不改别的管理器；图鉴按 `type==PRODUCE` 从 `get_all_items()` 枚举，**不动 ItemDatabase**；**读档守卫**——`crop_harvested/money_changed/season_changed` 在读档时也会 emit，CollectionManager 靠 `save_load_started`→`_loading` 期间挂起响应，避免误弹成就。

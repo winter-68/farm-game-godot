@@ -74,6 +74,12 @@ func _refresh_buy() -> void:
 	for item in ItemDatabase.get_all_items():
 		if item == null or item.buy_price <= 0:
 			continue
+		if item.type == ItemData.Type.SEED:
+			var crop: CropData = ItemDatabase.get_crop(item.linked_crop_id)
+			if crop != null:
+				var allowed := crop.allowed_seasons
+				if not allowed.is_empty() and not allowed.has(TimeManager.get_season_name()):
+					continue
 		buy_list.add_child(_make_buy_row(item))
 
 

@@ -23,6 +23,8 @@ func save_game(slot: int) -> void:
 	var data := {
 		"version": 1,
 		"time": TimeManager.to_save_dict(),
+		"weather": WeatherManager.to_save_dict(),
+		"collection": CollectionManager.to_save_dict(),
 		"inventory": InventoryManager.to_save_dict(),
 		"farm": FarmManager.to_save_dict(),
 		"player": {
@@ -65,7 +67,10 @@ func load_game(slot: int) -> bool:
 		push_warning("[SaveManager] bad save")
 		return false
 
+	EventBus.save_load_started.emit()
 	TimeManager.load_from_dict(data.get("time", {}))
+	WeatherManager.load_from_dict(data.get("weather", {}))
+	CollectionManager.load_from_dict(data.get("collection", {}))
 	InventoryManager.load_from_dict(data.get("inventory", {}))
 	FarmManager.load_from_dict(data.get("farm", {}))
 	var player_data: Dictionary = data.get("player", {})

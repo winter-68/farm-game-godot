@@ -22,6 +22,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func new_game() -> void:
 	_pending_load = false
 	TimeManager.new_game()
+	WeatherManager.new_game()
+	CollectionManager.new_game()
 	InventoryManager.new_game()
 	FarmManager.new_game()
 	get_tree().change_scene_to_file("res://scenes/main/main.tscn")

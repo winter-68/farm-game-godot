@@ -8,6 +8,8 @@ class_name CropData extends Resource
 @export var regrows: bool = false
 @export var regrow_to_stage: int = 0
 @export var produce_amount: int = 1
+## Empty means all seasons; otherwise crop can only be planted in listed seasons.
+@export var allowed_seasons: Array[String] = []
 
 
 ## Returns the index of the final growth stage.

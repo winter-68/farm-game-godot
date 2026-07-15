@@ -5,9 +5,16 @@ const ITEM_SHORT_NAMES := {
 	&"tool_wateringcan": "水壶",
 	&"seed_greenbean": "种子",
 	&"produce_greenbean": "绿豆",
+	&"seed_potato": "土豆种子",
+	&"produce_potato": "土豆",
+	&"seed_tomato": "番茄种子",
+	&"produce_tomato": "番茄",
+	&"seed_strawberry": "草莓种子",
+	&"produce_strawberry": "草莓",
 }
 const PANEL_COLOR := Color(0.06, 0.07, 0.08, 0.82)
 const SLOT_COLOR := Color(0.10, 0.12, 0.14, 0.92)
+const GRID_COLUMNS := 6
 
 @onready var panel: PanelContainer = $Panel
 @onready var grid: GridContainer = $Panel/MarginContainer/VBoxContainer/Grid
@@ -15,6 +22,7 @@ const SLOT_COLOR := Color(0.10, 0.12, 0.14, 0.92)
 
 func _ready() -> void:
 	visible = false
+	grid.columns = GRID_COLUMNS
 	_set_panel_style()
 	EventBus.inventory_changed.connect(_refresh)
 	_refresh()

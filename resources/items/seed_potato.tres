@@ -4,8 +4,9 @@
 
 [resource]
 script = ExtResource("1_item")
-item_id = &"seed_greenbean"
-display_name = "Green Bean Seeds"
+item_id = &"seed_potato"
+display_name = "土豆种子"
 type = 0
-buy_price = 15
-linked_crop_id = &"crop_greenbean"
+buy_price = 45
+sell_price = 12
+linked_crop_id = &"crop_potato"

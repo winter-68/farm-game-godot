@@ -56,6 +56,9 @@ func plant(cell: Vector2i, seed_item_id: StringName) -> void:
 	var crop_data: CropData = ItemDatabase.get_crop(seed.linked_crop_id)
 	if crop_data == null:
 		return
+	var allowed := crop_data.allowed_seasons
+	if not allowed.is_empty() and not allowed.has(TimeManager.get_season_name()):
+		return
 	if not InventoryManager.remove_item(seed_item_id, 1):
 		return
 
@@ -80,6 +83,18 @@ func water(cell: Vector2i) -> void:
 	tiles[cell] = tile
 	_farm.set_cell(cell, TILE_SOURCE_ID, WATERED_ATLAS_COORDS, 0)
 	EventBus.tile_watered.emit(cell)
+
+
+## Waters every tilled tile once, preserving the same idempotent behavior as water().
+func water_all_tilled() -> void:
+	for cell: Vector2i in tiles.keys():
+		var tile: FarmTile = tiles[cell] as FarmTile
+		if tile == null or not tile.tilled or tile.watered:
+			continue
+		tile.watered = true
+		if _farm != null:
+			_farm.set_cell(cell, TILE_SOURCE_ID, WATERED_ATLAS_COORDS, 0)
+		EventBus.tile_watered.emit(cell)
 
 
 ## Harvests a mature crop into inventory and resets or clears its crop state.

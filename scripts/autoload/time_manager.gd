@@ -1,10 +1,14 @@
 extends Node
 
+const SEASON_NAMES := ["春", "夏", "秋", "冬"]
+const DAYS_PER_SEASON := 28
+
 @export var seconds_per_game_minute: float = 0.5
 
 var day: int = 1
 var hour: int = 6
 var minute: int = 0
+var season: int = 0
 
 var _elapsed_seconds: float = 0.0
 
@@ -27,7 +31,9 @@ func new_game() -> void:
 	day = 1
 	hour = 6
 	minute = 0
+	season = 0
 	_elapsed_seconds = 0.0
+	EventBus.season_changed.emit(get_season_name())
 	EventBus.time_changed.emit(day, hour, minute)
 
 
@@ -37,8 +43,21 @@ func advance_to_next_day() -> void:
 	hour = 6
 	minute = 0
 	_elapsed_seconds = 0.0
+	if (day - 1) % DAYS_PER_SEASON == 0 and day > 1:
+		season = (season + 1) % SEASON_NAMES.size()
+		EventBus.season_changed.emit(get_season_name())
 	EventBus.day_passed.emit(day)
 	EventBus.time_changed.emit(day, hour, minute)
+
+
+## Returns the current season display name.
+func get_season_name() -> String:
+	return SEASON_NAMES[season]
+
+
+## Returns the day number within the current season.
+func get_day_in_season() -> int:
+	return ((day - 1) % DAYS_PER_SEASON) + 1
 
 
 ## Returns the current time state in save-friendly form.
@@ -47,6 +66,7 @@ func to_save_dict() -> Dictionary:
 		"day": day,
 		"hour": hour,
 		"minute": minute,
+		"season": season,
 	}
 
 
@@ -55,7 +75,9 @@ func load_from_dict(d: Dictionary) -> void:
 	day = int(d.get("day", 1))
 	hour = int(d.get("hour", 6))
 	minute = int(d.get("minute", 0))
+	season = clampi(int(d.get("season", 0)), 0, SEASON_NAMES.size() - 1)
 	_elapsed_seconds = 0.0
+	EventBus.season_changed.emit(get_season_name())
 	EventBus.time_changed.emit(day, hour, minute)
 
 
