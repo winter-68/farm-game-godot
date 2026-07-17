@@ -1,8 +1,29 @@
 extends Control
 
+const ArtDefaults := preload("res://scripts/art/art_defaults.gd")
+
 const ITEM_SHORT_NAMES := {
 	&"seed_greenbean": "绿豆种子",
 	&"produce_greenbean": "绿豆",
+	&"seed_potato": "土豆种子",
+	&"produce_potato": "土豆",
+	&"seed_tomato": "番茄种子",
+	&"produce_tomato": "番茄",
+	&"seed_strawberry": "草莓种子",
+	&"produce_strawberry": "草莓",
+	&"fish_crucian": "鲫鱼",
+	&"fish_carp": "鲤鱼",
+	&"fish_bass": "鲈鱼",
+	&"fish_goldfish": "金鱼",
+	&"fish_pufferfish": "河豚",
+	&"bait_basic": "基础鱼饵",
+	&"bait_quality": "优质鱼饵",
+	&"bait_legend": "传说鱼饵",
+	&"rod_iron": "铁竿",
+	&"rod_gold": "金竿",
+	&"food_baked_potato": "烤土豆",
+	&"food_tomato_soup": "番茄汤",
+	&"food_strawberry_dessert": "草莓甜点",
 }
 
 @onready var panel: PanelContainer = $Panel
@@ -13,6 +34,7 @@ const ITEM_SHORT_NAMES := {
 
 func _ready() -> void:
 	visible = false
+	_set_static_texts()
 	_set_panel_style()
 	EventBus.request_open_shop.connect(_open)
 	EventBus.inventory_changed.connect(_on_state_changed)
@@ -21,6 +43,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Dev shortcut: the world ShopEntrance is the normal player-facing entry.
 	if event.is_action_pressed("toggle_shop"):
 		visible = not visible
 		if visible:
@@ -64,7 +87,7 @@ func _refresh_sell() -> void:
 		if item == null:
 			continue
 		var quantity := int(sellable_counts[item_id])
-		sell_list.add_child(_make_sell_row(item, quantity))
+		sell_list.add_child(_make_sell_row(item, quantity, _get_sell_price(item)))
 
 
 func _refresh_buy() -> void:
@@ -73,6 +96,11 @@ func _refresh_buy() -> void:
 
 	for item in ItemDatabase.get_all_items():
 		if item == null or item.buy_price <= 0:
+			continue
+		if item.type == ItemData.Type.ROD:
+			if item.item_id == FishingManager.current_rod_id:
+				continue
+			buy_list.add_child(_make_rod_buy_row(item))
 			continue
 		if item.type == ItemData.Type.SEED:
 			var crop: CropData = ItemDatabase.get_crop(item.linked_crop_id)
@@ -90,48 +118,38 @@ func _get_sellable_counts() -> Dictionary:
 		if item_id == &"":
 			continue
 		var item: ItemData = ItemDatabase.get_item(item_id)
-		if item == null or item.sell_price <= 0:
+		if item == null or _get_sell_price(item) <= 0:
 			continue
 		counts[item_id] = int(counts.get(item_id, 0)) + int(slot.get("quantity", 0))
 	return counts
 
 
-func _make_sell_row(item: ItemData, quantity: int) -> HBoxContainer:
-	var row := HBoxContainer.new()
-	row.custom_minimum_size = Vector2(0, 24)
-	row.add_theme_constant_override("separation", 4)
-
-	var label := Label.new()
-	label.text = "%s ×%d  单价%d" % [_get_item_name(item), quantity, item.sell_price]
-	label.custom_minimum_size = Vector2(118, 0)
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	row.add_child(label)
+func _make_sell_row(item: ItemData, quantity: int, sell_price: int) -> HBoxContainer:
+	var row := _make_item_row_base(item)
+	var label := row.get_node("Label") as Label
+	label.text = "%s ×%d  单价%d" % [_get_item_name(item), quantity, sell_price]
+	label.custom_minimum_size = Vector2(112, 0)
 
 	var sell_one_button := Button.new()
 	sell_one_button.text = "卖1"
 	sell_one_button.custom_minimum_size = Vector2(42, 22)
-	sell_one_button.pressed.connect(_sell_one.bind(item.item_id, item.sell_price))
+	sell_one_button.pressed.connect(_sell_one.bind(item.item_id, sell_price))
 	row.add_child(sell_one_button)
 
 	var sell_all_button := Button.new()
 	sell_all_button.text = "全卖"
 	sell_all_button.custom_minimum_size = Vector2(48, 22)
-	sell_all_button.pressed.connect(_sell_all.bind(item.item_id, item.sell_price))
+	sell_all_button.pressed.connect(_sell_all.bind(item.item_id, sell_price))
 	row.add_child(sell_all_button)
 
 	return row
 
 
 func _make_buy_row(item: ItemData) -> HBoxContainer:
-	var row := HBoxContainer.new()
-	row.custom_minimum_size = Vector2(0, 24)
-	row.add_theme_constant_override("separation", 4)
-
-	var label := Label.new()
+	var row := _make_item_row_base(item)
+	var label := row.get_node("Label") as Label
 	label.text = "%s  单价%d" % [_get_item_name(item), item.buy_price]
-	label.custom_minimum_size = Vector2(168, 0)
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	row.add_child(label)
+	label.custom_minimum_size = Vector2(154, 0)
 
 	var buy_one_button := Button.new()
 	buy_one_button.text = "买1"
@@ -139,6 +157,47 @@ func _make_buy_row(item: ItemData) -> HBoxContainer:
 	buy_one_button.pressed.connect(_buy_one.bind(item.item_id, item.buy_price))
 	row.add_child(buy_one_button)
 
+	return row
+
+
+func _make_rod_buy_row(item: ItemData) -> HBoxContainer:
+	var row := _make_item_row_base(item)
+	var rod := ItemDatabase.get_rod(item.item_id)
+	var required_level := int(rod.required_level) if rod != null else 0
+	var can_buy := FishingManager.get_level() >= required_level
+
+	var label := row.get_node("Label") as Label
+	label.text = "%s  单价%d" % [_get_item_name(item), item.buy_price]
+	if not can_buy:
+		label.text += "  需要 Lv.%d" % required_level
+		label.modulate = Color(0.55, 0.55, 0.55, 1.0)
+	label.custom_minimum_size = Vector2(154, 0)
+
+	var buy_one_button := Button.new()
+	buy_one_button.text = "装备" if can_buy else "未解锁"
+	buy_one_button.disabled = not can_buy
+	buy_one_button.custom_minimum_size = Vector2(52, 22)
+	buy_one_button.pressed.connect(_buy_rod.bind(item.item_id, item.buy_price))
+	row.add_child(buy_one_button)
+
+	return row
+
+
+func _make_item_row_base(item: ItemData) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.custom_minimum_size = Vector2(0, 24)
+	row.add_theme_constant_override("separation", 4)
+
+	var icon := TextureRect.new()
+	icon.custom_minimum_size = Vector2(16, 16)
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	icon.texture = ArtDefaults.item_texture(item)
+	row.add_child(icon)
+
+	var label := Label.new()
+	label.name = "Label"
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	row.add_child(label)
 	return row
 
 
@@ -163,8 +222,39 @@ func _buy_one(item_id: StringName, buy_price: int) -> void:
 		InventoryManager.add_money(buy_price * leftover)
 
 
+func _buy_rod(rod_id: StringName, buy_price: int) -> void:
+	var rod := ItemDatabase.get_rod(rod_id)
+	if rod == null:
+		return
+	if FishingManager.get_level() < int(rod.required_level):
+		return
+	if not InventoryManager.try_spend(buy_price):
+		return
+	FishingManager.set_rod(rod_id)
+	_refresh()
+
+
 func _get_item_name(item: ItemData) -> String:
 	return ITEM_SHORT_NAMES.get(item.item_id, item.display_name)
+
+
+func _get_sell_price(item: ItemData) -> int:
+	if item.type == ItemData.Type.FISH:
+		var fish := ItemDatabase.get_fish(item.item_id)
+		if fish != null:
+			return int(fish.sell_price)
+	if item.type == ItemData.Type.BAIT:
+		var bait: Resource = ItemDatabase.get_bait(item.item_id)
+		if bait != null:
+			return int(bait.sell_price)
+	return item.sell_price
+
+
+func _set_static_texts() -> void:
+	$Panel/MarginContainer/VBoxContainer/Title.text = "商店"
+	$Panel/MarginContainer/VBoxContainer/SellTitle.text = "出售"
+	$Panel/MarginContainer/VBoxContainer/BuyTitle.text = "购买"
+	close_button.text = "关闭"
 
 
 func _set_panel_style() -> void:

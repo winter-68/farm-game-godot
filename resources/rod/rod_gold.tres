@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RodData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/rod_data.gd" id="1_rod"]
+
+[resource]
+script = ExtResource("1_rod")
+rod_id = &"rod_gold"
+display_name = "金竿"
+buy_price = 800
+sell_price = 0
+speed_modifier = 0.55
+xp_multiplier = 1.5
+rare_bonus = 0.15
+required_level = 6
+description = "闪亮的高级鱼竿，钓鱼效率大幅提升。"

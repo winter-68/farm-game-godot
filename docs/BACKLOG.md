@@ -75,3 +75,11 @@
 | T29 | 解锁提示 toast（发现新作物 / 达成成就） | [T29](./tasks/T29_collection_toast.md) |
 
 **架构铁律**：CollectionManager autoload 注册在 WeatherManager 后、SaveManager 前；只读 ItemDatabase/TimeManager、只监听 EventBus，不搜树、不改别的管理器；图鉴按 `type==PRODUCE` 从 `get_all_items()` 枚举，**不动 ItemDatabase**；**读档守卫**——`crop_harvested/money_changed/season_changed` 在读档时也会 emit，CollectionManager 靠 `save_load_started`→`_loading` 期间挂起响应，避免误弹成就。
+
+## 批次 G：钓鱼成长线 🐟
+
+| ID | 任务 | 任务卡 |
+|----|------|--------|
+| T37 | 钓鱼等级与经验系统 | [T37](./tasks/T37_fishing_level.md) |
+| T38 | 鱼饵系统 | [T38](./tasks/T38_bait_system.md) |
+| T39 | 钓鱼竿升级系统 | [T39](./tasks/T39_rod_upgrade.md) |

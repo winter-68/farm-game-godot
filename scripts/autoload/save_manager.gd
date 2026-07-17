@@ -24,8 +24,12 @@ func save_game(slot: int) -> void:
 		"version": 1,
 		"time": TimeManager.to_save_dict(),
 		"weather": WeatherManager.to_save_dict(),
+		"fishing": FishingManager.to_save_dict(),
 		"collection": CollectionManager.to_save_dict(),
+		"friendship": FriendshipManager.to_save_dict(),
 		"inventory": InventoryManager.to_save_dict(),
+		"stamina": StaminaManager.to_save_dict(),
+		"watering_can": WaterManager.to_save_dict(),
 		"farm": FarmManager.to_save_dict(),
 		"player": {
 			"pos_x": pos.x,
@@ -70,8 +74,12 @@ func load_game(slot: int) -> bool:
 	EventBus.save_load_started.emit()
 	TimeManager.load_from_dict(data.get("time", {}))
 	WeatherManager.load_from_dict(data.get("weather", {}))
+	FishingManager.load_from_dict(data.get("fishing", {}))
 	CollectionManager.load_from_dict(data.get("collection", {}))
+	FriendshipManager.load_from_dict(data.get("friendship", {}))
 	InventoryManager.load_from_dict(data.get("inventory", {}))
+	StaminaManager.load_from_dict(data.get("stamina", {}))
+	WaterManager.load_from_dict(data.get("watering_can", {}))
 	FarmManager.load_from_dict(data.get("farm", {}))
 	var player_data: Dictionary = data.get("player", {})
 	GameManager.set_player_position(Vector2(

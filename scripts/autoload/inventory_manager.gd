@@ -8,6 +8,7 @@ var selected_index: int = 0
 
 
 func _ready() -> void:
+	EventBus.fish_caught.connect(_on_fish_caught)
 	_setup_new_game()
 
 
@@ -188,3 +189,11 @@ func _emit_state_changed() -> void:
 
 func _empty_slot() -> Dictionary:
 	return {"item_id": &"", "quantity": 0}
+
+
+func _on_fish_caught(fish_data: Resource) -> void:
+	var item_id := ItemDatabase.get_fish_item_id(fish_data)
+	if item_id == &"":
+		push_warning("[InventoryManager] Unknown fish caught")
+		return
+	add_item(item_id, 1)

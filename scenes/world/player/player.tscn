@@ -1,15 +1,17 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/player.gd" id="1_player"]
+[ext_resource type="Resource" path="res://resources/player_art_default.tres" id="2_player_art"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_player"]
-size = Vector2(24, 24)
+size = Vector2(16, 24)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_indicator"]
 size = Vector2(6, 6)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_player")
+art_data = ExtResource("2_player_art")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_player")

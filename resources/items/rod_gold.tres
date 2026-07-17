@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/item_rod_gold.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"rod_gold"
+display_name = "金竿"
+type = 6
+icon = ExtResource("2_icon")
+buy_price = 800
+sell_price = 0

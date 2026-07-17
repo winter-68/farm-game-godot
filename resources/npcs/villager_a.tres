@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="NPCData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/npc_data.gd" id="1_npc_data"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_a_sprite.png" id="2_sprite"]
+[ext_resource type="Texture2D" path="res://assets/sprites/portraits/npc_villager_a_portrait_neutral.png" id="3_portrait"]
+
+[resource]
+script = ExtResource("1_npc_data")
+npc_name = "村民A"
+sprite_texture = ExtResource("2_sprite")
+portrait = ExtResource("3_portrait")
+placeholder_color = Color(0.35, 0.9, 0.45, 1)
+dialogues = PackedStringArray("今天适合种点什么。", "田里有风吹过。")
+name_color = Color(0.35, 0.9, 0.45, 1)
+spawn_position = Vector2(848, 352)
+move_area = Rect2(784, 288, 192, 144)
+max_friendship = 100
+heart_stages = PackedStringArray("点头之交", "熟悉的邻居", "可靠的朋友", "亲密伙伴")

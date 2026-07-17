@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="PlayerArtData" load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/player_art_data.gd" id="1_player_art"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_stand_down.png" id="2_stand_down"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_stand_up.png" id="3_stand_up"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_stand_left.png" id="4_stand_left"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_stand_right.png" id="5_stand_right"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_down_0.png" id="6_walk_down_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_down_1.png" id="7_walk_down_1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_up_0.png" id="8_walk_up_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_up_1.png" id="9_walk_up_1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_left_0.png" id="10_walk_left_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_left_1.png" id="11_walk_left_1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_right_0.png" id="12_walk_right_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player/player_walk_right_1.png" id="13_walk_right_1"]
+
+[resource]
+script = ExtResource("1_player_art")
+stand_down = ExtResource("2_stand_down")
+stand_up = ExtResource("3_stand_up")
+stand_left = ExtResource("4_stand_left")
+stand_right = ExtResource("5_stand_right")
+walk_down = Array[Texture2D]([ExtResource("6_walk_down_0"), ExtResource("7_walk_down_1")])
+walk_up = Array[Texture2D]([ExtResource("8_walk_up_0"), ExtResource("9_walk_up_1")])
+walk_left = Array[Texture2D]([ExtResource("10_walk_left_0"), ExtResource("11_walk_left_1")])
+walk_right = Array[Texture2D]([ExtResource("12_walk_right_0"), ExtResource("13_walk_right_1")])
+placeholder_color = Color(0.337, 0.769, 0.451, 1)
+frame_time = 0.18

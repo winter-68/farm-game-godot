@@ -12,6 +12,8 @@ const ACHIEVEMENTS := [
 ]
 
 var discovered: Dictionary = {}
+var fish_discovered: Dictionary = {}
+var recipe_discovered: Dictionary = {}
 var total_harvested: int = 0
 var max_money: int = 0
 var seasons_seen: Dictionary = {}
@@ -22,6 +24,8 @@ var _loading: bool = false
 
 func _ready() -> void:
 	EventBus.crop_harvested.connect(_on_crop_harvested)
+	EventBus.fish_caught.connect(_on_fish_caught)
+	EventBus.recipe_discovered.connect(_on_recipe_discovered)
 	EventBus.money_changed.connect(_on_money_changed)
 	EventBus.season_changed.connect(_on_season_changed)
 	EventBus.day_passed.connect(_on_day_passed)
@@ -32,6 +36,8 @@ func _ready() -> void:
 ## Resets all collection and achievement progress for a new game.
 func new_game() -> void:
 	discovered.clear()
+	fish_discovered.clear()
+	recipe_discovered.clear()
 	total_harvested = 0
 	max_money = 0
 	seasons_seen.clear()
@@ -41,6 +47,14 @@ func new_game() -> void:
 
 func is_discovered(produce_id: StringName) -> bool:
 	return discovered.has(String(produce_id))
+
+
+func is_fish_discovered(fish_item_id: StringName) -> bool:
+	return fish_discovered.has(String(fish_item_id))
+
+
+func is_recipe_discovered(recipe_id: StringName) -> bool:
+	return recipe_discovered.has(String(recipe_id))
 
 
 func is_unlocked(achievement_id: StringName) -> bool:
@@ -60,9 +74,15 @@ func discovered_count() -> int:
 	return discovered.size()
 
 
+func fish_discovered_count() -> int:
+	return fish_discovered.size()
+
+
 func to_save_dict() -> Dictionary:
 	return {
 		"discovered": discovered.keys(),
+		"fish_discovered": fish_discovered.keys(),
+		"recipe_discovered": recipe_discovered.keys(),
 		"total_harvested": total_harvested,
 		"max_money": max_money,
 		"seasons_seen": seasons_seen.keys(),
@@ -75,6 +95,12 @@ func load_from_dict(d: Dictionary) -> void:
 	discovered.clear()
 	for k in d.get("discovered", []):
 		discovered[String(k)] = true
+	fish_discovered.clear()
+	for k in d.get("fish_discovered", []):
+		fish_discovered[String(k)] = true
+	recipe_discovered.clear()
+	for k in d.get("recipe_discovered", []):
+		recipe_discovered[String(k)] = true
 	total_harvested = int(d.get("total_harvested", 0))
 	max_money = int(d.get("max_money", 0))
 	seasons_seen.clear()
@@ -101,6 +127,22 @@ func _on_crop_harvested(_cell: Vector2i, produce_id: StringName, amount: int) ->
 		discovered[String(produce_id)] = true
 		EventBus.collection_discovered.emit(produce_id)
 	_evaluate()
+
+
+func _on_fish_caught(fish_data: Resource) -> void:
+	if _loading:
+		return
+	var item_id := ItemDatabase.get_fish_item_id(fish_data)
+	if item_id == &"" or fish_discovered.has(String(item_id)):
+		return
+	fish_discovered[String(item_id)] = true
+	EventBus.fish_discovered.emit(item_id)
+
+
+func _on_recipe_discovered(recipe_id: StringName) -> void:
+	if _loading or recipe_discovered.has(String(recipe_id)):
+		return
+	recipe_discovered[String(recipe_id)] = true
 
 
 func _on_money_changed(new_amount: int) -> void:

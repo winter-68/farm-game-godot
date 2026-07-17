@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/sprites/food/item_food_baked_potato.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"food_baked_potato"
+display_name = "烤土豆"
+type = 3
+icon = ExtResource("2_icon")
+sell_price = 45
+edible = true
+buff_type = &"move_speed"
+buff_value = 1.15
+buff_duration = 30.0

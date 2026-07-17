@@ -23,16 +23,16 @@ func register_layers(ground: TileMapLayer, farm: TileMapLayer) -> void:
 
 
 ## Tills a valid ground cell once and records it as persistent runtime state.
-func till(cell: Vector2i) -> void:
+func till(cell: Vector2i) -> bool:
 	if _ground == null or _farm == null:
 		push_warning("[FarmManager] Farm layers have not been registered")
-		return
+		return false
 	if _ground.get_cell_source_id(cell) == -1:
-		return
+		return false
 
 	var tile: FarmTile = tiles.get(cell) as FarmTile
 	if tile != null and tile.tilled:
-		return
+		return false
 	if tile == null:
 		tile = FarmTile.new()
 
@@ -40,27 +40,28 @@ func till(cell: Vector2i) -> void:
 	tiles[cell] = tile
 	_farm.set_cell(cell, TILE_SOURCE_ID, TILLED_ATLAS_COORDS, 0)
 	EventBus.tile_tilled.emit(cell)
+	return true
 
 
 ## Plants one valid seed on an empty tilled cell.
-func plant(cell: Vector2i, seed_item_id: StringName) -> void:
+func plant(cell: Vector2i, seed_item_id: StringName) -> bool:
 	var tile: FarmTile = tiles.get(cell) as FarmTile
 	if tile == null:
 		tile = FarmTile.new()
 	if not tile.tilled or tile.crop_id != &"":
-		return
+		return false
 
 	var seed: ItemData = ItemDatabase.get_item(seed_item_id)
 	if seed == null or seed.type != ItemData.Type.SEED:
-		return
+		return false
 	var crop_data: CropData = ItemDatabase.get_crop(seed.linked_crop_id)
 	if crop_data == null:
-		return
+		return false
 	var allowed := crop_data.allowed_seasons
 	if not allowed.is_empty() and not allowed.has(TimeManager.get_season_name()):
-		return
+		return false
 	if not InventoryManager.remove_item(seed_item_id, 1):
-		return
+		return false
 
 	tile.crop_id = seed.linked_crop_id
 	tile.stage = 0
@@ -68,21 +69,23 @@ func plant(cell: Vector2i, seed_item_id: StringName) -> void:
 	tile.harvestable = false
 	tiles[cell] = tile
 	EventBus.crop_planted.emit(cell, tile.crop_id)
+	return true
 
 
 ## Waters a tilled cell once for the current day.
-func water(cell: Vector2i) -> void:
+func water(cell: Vector2i) -> bool:
 	if _ground == null or _farm == null:
 		push_warning("[FarmManager] Farm layers have not been registered")
-		return
+		return false
 	var tile: FarmTile = tiles.get(cell) as FarmTile
 	if tile == null or not tile.tilled or tile.watered:
-		return
+		return false
 
 	tile.watered = true
 	tiles[cell] = tile
 	_farm.set_cell(cell, TILE_SOURCE_ID, WATERED_ATLAS_COORDS, 0)
 	EventBus.tile_watered.emit(cell)
+	return true
 
 
 ## Waters every tilled tile once, preserving the same idempotent behavior as water().
@@ -98,13 +101,13 @@ func water_all_tilled() -> void:
 
 
 ## Harvests a mature crop into inventory and resets or clears its crop state.
-func harvest(cell: Vector2i) -> void:
+func harvest(cell: Vector2i) -> bool:
 	var tile: FarmTile = tiles.get(cell) as FarmTile
 	if tile == null or tile.crop_id == &"" or not tile.harvestable:
-		return
+		return false
 	var crop: CropData = ItemDatabase.get_crop(tile.crop_id)
 	if crop == null:
-		return
+		return false
 
 	InventoryManager.add_item(crop.produce_item_id, crop.produce_amount)
 	if crop.regrows:
@@ -117,6 +120,7 @@ func harvest(cell: Vector2i) -> void:
 		tile.harvestable = false
 		tile.watered_days = 0
 	EventBus.crop_harvested.emit(cell, crop.produce_item_id, crop.produce_amount)
+	return true
 
 
 ## Returns farm tile state in save-friendly form.
@@ -179,18 +183,23 @@ func _on_day_passed(_new_day: int) -> void:
 
 
 func _on_request_harvest(cell: Vector2i) -> void:
-	harvest(cell)
+	if StaminaManager.can_spend(1.0) and harvest(cell):
+		StaminaManager.spend(1.0)
 
 
 func _on_request_use_item(item_id: StringName, cell: Vector2i) -> void:
 	if item_id == &"tool_hoe":
-		till(cell)
+		if StaminaManager.can_spend(4.0) and till(cell):
+			StaminaManager.spend(4.0)
 		return
 	if item_id == &"tool_wateringcan":
-		water(cell)
+		if StaminaManager.can_spend(2.0) and WaterManager.has_water() and water(cell):
+			StaminaManager.spend(2.0)
+			WaterManager.use_water()
 		return
 	var item: ItemData = ItemDatabase.get_item(item_id)
 	if item != null and item.type == ItemData.Type.SEED:
-		plant(cell, item_id)
+		if StaminaManager.can_spend(1.0) and plant(cell, item_id):
+			StaminaManager.spend(1.0)
 		return
 	# TODO: Dispatch additional tools in later farming tasks.

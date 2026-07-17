@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RodData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/rod_data.gd" id="1_rod"]
+
+[resource]
+script = ExtResource("1_rod")
+rod_id = &"rod_basic"
+display_name = "初始鱼竿"
+buy_price = 0
+sell_price = 0
+speed_modifier = 1.0
+xp_multiplier = 1.0
+rare_bonus = 0.0
+required_level = 0
+description = "可靠的旧鱼竿。"

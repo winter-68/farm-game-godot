@@ -5,6 +5,7 @@ class_name CropData extends Resource
 @export var produce_item_id: StringName
 @export var days_per_stage: int = 1
 @export var stage_textures: Array[Texture2D]
+@export var placeholder_color: Color = Color(0.25, 0.85, 0.3, 1.0)
 @export var regrows: bool = false
 @export var regrow_to_stage: int = 0
 @export var produce_amount: int = 1

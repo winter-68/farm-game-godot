@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/fish_data.gd" id="1_fish_data"]
+
+[resource]
+script = ExtResource("1_fish_data")
+fish_name = "鲈鱼"
+sell_price = 50
+rarity = 0.4
+available_seasons = Array[String](["春", "夏"])
+available_time = "全天"
+min_level = 2
+xp_reward = 10

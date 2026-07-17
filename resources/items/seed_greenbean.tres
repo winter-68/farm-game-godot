@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/item_seed_greenbean.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1_item")
 item_id = &"seed_greenbean"
-display_name = "Green Bean Seeds"
+display_name = "绿豆种子"
 type = 0
+icon = ExtResource("2_icon")
 buy_price = 15
+sell_price = 4
 linked_crop_id = &"crop_greenbean"

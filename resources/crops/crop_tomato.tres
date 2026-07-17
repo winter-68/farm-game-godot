@@ -1,6 +1,10 @@
-[gd_resource type="Resource" script_class="CropData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CropData" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/crop_data.gd" id="1_crop"]
+[ext_resource type="Texture2D" path="res://assets/sprites/crops/crop_tomato_stage_0.png" id="2_stage_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/crops/crop_tomato_stage_1.png" id="3_stage_1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/crops/crop_tomato_stage_2.png" id="4_stage_2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/crops/crop_tomato_stage_3.png" id="5_stage_3"]
 
 [resource]
 script = ExtResource("1_crop")
@@ -8,7 +12,8 @@ crop_id = &"crop_tomato"
 display_name = "番茄"
 produce_item_id = &"produce_tomato"
 days_per_stage = 3
-stage_textures = Array[Texture2D]([null, null, null, null])
+stage_textures = Array[Texture2D]([ExtResource("2_stage_0"), ExtResource("3_stage_1"), ExtResource("4_stage_2"), ExtResource("5_stage_3")])
+placeholder_color = Color(0.86, 0.24, 0.22, 1)
 regrows = true
 regrow_to_stage = 1
 produce_amount = 1

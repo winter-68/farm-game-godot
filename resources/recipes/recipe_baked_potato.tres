@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+recipe_id = &"recipe_baked_potato"
+recipe_name = "烤土豆"
+ingredient_ids = Array[StringName]([&"produce_potato"])
+ingredient_amounts = Array[int]([1])
+result_item_id = &"food_baked_potato"
+result_amount = 1
+cooking_time = 1.5

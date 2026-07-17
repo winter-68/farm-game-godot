@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/world/world.tscn" id="1_world"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/weather_overlay.tscn" id="6_weather"]
 [ext_resource type="PackedScene" path="res://scenes/ui/collection_ui.tscn" id="7_collection"]
 [ext_resource type="PackedScene" path="res://scenes/ui/collection_toast.tscn" id="8_toast"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_ui.tscn" id="9_dialogue"]
+[ext_resource type="PackedScene" path="res://scenes/ui/fishing_minigame.tscn" id="10_fishing"]
+[ext_resource type="PackedScene" path="res://scenes/ui/cooking_ui.tscn" id="11_cooking"]
+[ext_resource type="PackedScene" path="res://scenes/ui/help_overlay.tscn" id="12_help"]
 
 [node name="Main" type="Node"]
 
@@ -25,6 +29,14 @@
 
 [node name="ShopUI" parent="UI" instance=ExtResource("5_shop_ui")]
 
+[node name="CookingUI" parent="UI" instance=ExtResource("11_cooking")]
+
 [node name="CollectionUI" parent="UI" instance=ExtResource("7_collection")]
 
+[node name="FishingMinigame" parent="UI" instance=ExtResource("10_fishing")]
+
+[node name="DialogueUI" parent="UI" instance=ExtResource("9_dialogue")]
+
 [node name="CollectionToast" parent="UI" instance=ExtResource("8_toast")]
+
+[node name="HelpOverlay" parent="UI" instance=ExtResource("12_help")]

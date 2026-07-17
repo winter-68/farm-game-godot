@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BaitData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/bait_data.gd" id="1_bait"]
+
+[resource]
+script = ExtResource("1_bait")
+bait_id = &"bait_legend"
+display_name = "传说鱼饵"
+buy_price = 150
+sell_price = 60
+xp_multiplier = 1.8
+rare_bonus = 0.25
+description = "昂贵的高级鱼饵，明显提高稀有鱼概率。"
+craft_recipe = {}
