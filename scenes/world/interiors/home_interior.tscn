@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/interior_room.gd" id="1_room"]
+[ext_resource type="Script" path="res://scripts/world/world_entrance.gd" id="2_entrance"]
+[ext_resource type="Texture2D" path="res://assets/sprites/world/home_interior_art.png" id="3_home_art"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(64, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sleep"]
+size = Vector2(80, 80)
+
+[node name="HomeInterior" type="Node2D"]
+script = ExtResource("1_room")
+room_kind = "home"
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("3_home_art")
+centered = false
+
+[node name="ExitEntrance" type="Area2D" parent="."]
+position = Vector2(320, 394)
+script = ExtResource("2_entrance")
+action = 5
+prompt_text = "按 E 出门"
+return_position = Vector2(640, 320)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitEntrance"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="PromptLabel" type="Label" parent="ExitEntrance"]
+visible = false
+offset_left = -44.0
+offset_top = -34.0
+offset_right = 44.0
+offset_bottom = -12.0
+theme_override_colors/font_color = Color(1, 0.96, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.03, 0.04, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 10
+text = "按 E 出门"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SleepEntrance" type="Area2D" parent="."]
+position = Vector2(172, 252)
+script = ExtResource("2_entrance")
+action = 1
+prompt_text = "按 E 睡觉"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SleepEntrance"]
+shape = SubResource("RectangleShape2D_sleep")
+
+[node name="PromptLabel" type="Label" parent="SleepEntrance"]
+visible = false
+offset_left = -44.0
+offset_top = -52.0
+offset_right = 44.0
+offset_bottom = -30.0
+theme_override_colors/font_color = Color(1, 0.96, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.03, 0.04, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 10
+text = "按 E 睡觉"
+horizontal_alignment = 1
+vertical_alignment = 1

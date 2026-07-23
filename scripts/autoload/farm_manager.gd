@@ -3,6 +3,10 @@ extends Node
 const TILE_SOURCE_ID := 0
 const TILLED_ATLAS_COORDS := Vector2i(1, 0)
 const WATERED_ATLAS_COORDS := Vector2i(2, 0)
+const HOE_STAMINA_COST := 4.0
+const WATER_STAMINA_COST := 2.0
+const PLANT_STAMINA_COST := 1.0
+const HARVEST_STAMINA_COST := 1.0
 
 var tiles: Dictionary = {}
 
@@ -183,23 +187,34 @@ func _on_day_passed(_new_day: int) -> void:
 
 
 func _on_request_harvest(cell: Vector2i) -> void:
-	if StaminaManager.can_spend(1.0) and harvest(cell):
-		StaminaManager.spend(1.0)
+	if not StaminaManager.can_spend(HARVEST_STAMINA_COST):
+		EventBus.gameplay_notice.emit("体力不足，睡觉后再继续吧")
+		return
+	if harvest(cell):
+		StaminaManager.spend(HARVEST_STAMINA_COST)
 
 
 func _on_request_use_item(item_id: StringName, cell: Vector2i) -> void:
 	if item_id == &"tool_hoe":
-		if StaminaManager.can_spend(4.0) and till(cell):
-			StaminaManager.spend(4.0)
+		if not StaminaManager.can_spend(HOE_STAMINA_COST):
+			EventBus.gameplay_notice.emit("体力不足，睡觉后再继续吧")
+		elif till(cell):
+			StaminaManager.spend(HOE_STAMINA_COST)
 		return
 	if item_id == &"tool_wateringcan":
-		if StaminaManager.can_spend(2.0) and WaterManager.has_water() and water(cell):
-			StaminaManager.spend(2.0)
+		if not WaterManager.has_water():
+			EventBus.gameplay_notice.emit("水壶已空，去池塘边按 E 打水")
+		elif not StaminaManager.can_spend(WATER_STAMINA_COST):
+			EventBus.gameplay_notice.emit("体力不足，睡觉后再继续吧")
+		elif water(cell):
+			StaminaManager.spend(WATER_STAMINA_COST)
 			WaterManager.use_water()
 		return
 	var item: ItemData = ItemDatabase.get_item(item_id)
 	if item != null and item.type == ItemData.Type.SEED:
-		if StaminaManager.can_spend(1.0) and plant(cell, item_id):
-			StaminaManager.spend(1.0)
+		if not StaminaManager.can_spend(PLANT_STAMINA_COST):
+			EventBus.gameplay_notice.emit("体力不足，睡觉后再继续吧")
+		elif plant(cell, item_id):
+			StaminaManager.spend(PLANT_STAMINA_COST)
 		return
 	# TODO: Dispatch additional tools in later farming tasks.

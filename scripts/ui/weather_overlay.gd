@@ -1,8 +1,10 @@
 extends Control
 
-const RAIN_TINT := Color(0.25, 0.35, 0.55, 0.18)
-const SNOW_TINT := Color(0.75, 0.80, 0.90, 0.14)
+const RAIN_TINT := Color(0.25, 0.35, 0.55, 0.04)
+const SNOW_TINT := Color(0.75, 0.80, 0.90, 0.04)
+const CLOUDY_TINT := Color(0.1, 0.1, 0.12, 0.03)
 const CLEAR_TINT := Color(0.0, 0.0, 0.0, 0.0)
+const EMISSION_WIDTH := 680.0
 
 @onready var tint: ColorRect = $Tint
 @onready var notice: Label = $Notice
@@ -34,7 +36,7 @@ func _apply_weather(weather_id: StringName, announce: bool) -> void:
 			tint.color = SNOW_TINT
 			_setup_snow()
 		WeatherManager.WEATHER_CLOUDY:
-			tint.color = Color(0.1, 0.1, 0.12, 0.10)
+			tint.color = CLOUDY_TINT
 			_particles.emitting = false
 		_:
 			tint.color = CLEAR_TINT
@@ -44,9 +46,9 @@ func _apply_weather(weather_id: StringName, announce: bool) -> void:
 
 
 func _setup_rain() -> void:
-	_particles.position = Vector2(160, -8)
+	_particles.position = Vector2(320, -8)
 	_particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
-	_particles.emission_rect_extents = Vector2(180, 4)
+	_particles.emission_rect_extents = Vector2(EMISSION_WIDTH * 0.5, 4)
 	_particles.amount = 80
 	_particles.lifetime = 0.7
 	_particles.direction = Vector2(0, 1)
@@ -56,14 +58,14 @@ func _setup_rain() -> void:
 	_particles.initial_velocity_max = 220.0
 	_particles.scale_amount_min = 1.0
 	_particles.scale_amount_max = 2.0
-	_particles.color = Color(0.7, 0.8, 1.0, 0.7)
+	_particles.color = Color(0.7, 0.8, 1.0, 0.45)
 	_particles.emitting = true
 
 
 func _setup_snow() -> void:
-	_particles.position = Vector2(160, -8)
+	_particles.position = Vector2(320, -8)
 	_particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
-	_particles.emission_rect_extents = Vector2(180, 4)
+	_particles.emission_rect_extents = Vector2(EMISSION_WIDTH * 0.5, 4)
 	_particles.amount = 50
 	_particles.lifetime = 3.0
 	_particles.direction = Vector2(0, 1)
@@ -73,7 +75,7 @@ func _setup_snow() -> void:
 	_particles.initial_velocity_max = 30.0
 	_particles.scale_amount_min = 1.5
 	_particles.scale_amount_max = 3.0
-	_particles.color = Color(1, 1, 1, 0.85)
+	_particles.color = Color(1, 1, 1, 0.55)
 	_particles.emitting = true
 
 

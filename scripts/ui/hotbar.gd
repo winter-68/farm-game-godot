@@ -47,10 +47,11 @@ func _ready() -> void:
 	_refresh()
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	for index in range(HOTBAR_ACTIONS.size()):
-		if event.is_action_pressed(HOTBAR_ACTIONS[index]):
+		if event.is_action_pressed(HOTBAR_ACTIONS[index]) and not event.is_echo():
 			InventoryManager.set_selected(index)
+			get_viewport().set_input_as_handled()
 			return
 
 

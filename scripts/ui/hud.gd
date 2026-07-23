@@ -13,7 +13,9 @@ var _money: int = 0
 @onready var crop_info: Label = $CropInfo
 @onready var water_label: Label = $WaterPanel/WaterLabel
 @onready var water_bar: ProgressBar = $WaterPanel/WaterBar
+@onready var action_notice: Label = $ActionNotice
 var weather_label: Label
+var _notice_token := 0
 
 
 func _ready() -> void:
@@ -29,6 +31,7 @@ func _ready() -> void:
 	EventBus.stamina_changed.connect(_on_stamina_changed)
 	EventBus.crop_inspected.connect(_on_crop_inspected)
 	EventBus.watering_can_changed.connect(_on_watering_can_changed)
+	EventBus.gameplay_notice.connect(_on_gameplay_notice)
 	weather_label = Label.new()
 	weather_label.name = "WeatherLabel"
 	$MarginContainer/VBoxContainer.add_child(weather_label)
@@ -46,10 +49,11 @@ func _process(_delta: float) -> void:
 		_refresh_buff()
 
 
-func _unhandled_input(_event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	# Dev shortcut: the world SleepEntrance is the normal player-facing entry.
-	if Input.is_action_just_pressed("debug_sleep"):
+	if event.is_action_pressed("debug_sleep") and not event.is_echo():
 		TimeManager.advance_to_next_day()
+		get_viewport().set_input_as_handled()
 
 
 func _on_time_changed(day: int, hour: int, minute: int) -> void:
@@ -109,6 +113,16 @@ func _on_watering_can_changed(current: int, maximum: int) -> void:
 	water_bar.max_value = maximum
 	water_bar.value = current
 	water_label.text = "水壶 %d / %d" % [current, maximum]
+
+
+func _on_gameplay_notice(message: String) -> void:
+	_notice_token += 1
+	var token := _notice_token
+	action_notice.text = message
+	action_notice.visible = true
+	await get_tree().create_timer(1.8).timeout
+	if token == _notice_token:
+		action_notice.visible = false
 
 
 func _on_fishing_changed(_amount: int, _source: StringName) -> void:

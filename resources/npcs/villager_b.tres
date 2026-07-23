@@ -1,18 +1,37 @@
-[gd_resource type="Resource" script_class="NPCData" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="NPCData" load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/npc_data.gd" id="1_npc_data"]
 [ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_sprite.png" id="2_sprite"]
 [ext_resource type="Texture2D" path="res://assets/sprites/portraits/npc_villager_b_portrait_neutral.png" id="3_portrait"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_stand_up.png" id="4_stand_up"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_stand_left.png" id="5_stand_left"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_stand_right.png" id="6_stand_right"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_down_0.png" id="7_walk_down_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_down_1.png" id="8_walk_down_1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_up_0.png" id="9_walk_up_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_up_1.png" id="10_walk_up_1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_left_0.png" id="11_walk_left_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_left_1.png" id="12_walk_left_1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_right_0.png" id="13_walk_right_0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/npcs/npc_villager_b_walk_right_1.png" id="14_walk_right_1"]
 
 [resource]
 script = ExtResource("1_npc_data")
 npc_name = "村民B"
 sprite_texture = ExtResource("2_sprite")
 portrait = ExtResource("3_portrait")
+stand_down = ExtResource("2_sprite")
+stand_up = ExtResource("4_stand_up")
+stand_left = ExtResource("5_stand_left")
+stand_right = ExtResource("6_stand_right")
+walk_down = Array[Texture2D]([ExtResource("7_walk_down_0"), ExtResource("8_walk_down_1")])
+walk_up = Array[Texture2D]([ExtResource("9_walk_up_0"), ExtResource("10_walk_up_1")])
+walk_left = Array[Texture2D]([ExtResource("11_walk_left_0"), ExtResource("12_walk_left_1")])
+walk_right = Array[Texture2D]([ExtResource("13_walk_right_0"), ExtResource("14_walk_right_1")])
 placeholder_color = Color(0.35, 0.55, 1, 1)
 dialogues = PackedStringArray("天气变得真快。", "商店最近还挺热闹。")
 name_color = Color(0.35, 0.55, 1, 1)
-spawn_position = Vector2(1008, 424)
-move_area = Rect2(944, 352, 192, 144)
+spawn_position = Vector2(1160, 296)
+move_area = Rect2(1120, 272, 112, 80)
 max_friendship = 100
 heart_stages = PackedStringArray("点头之交", "熟悉的邻居", "可靠的朋友", "亲密伙伴")

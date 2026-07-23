@@ -8,12 +8,13 @@ const ArtDefaults := preload("res://scripts/art/art_defaults.gd")
 var facing: Vector2i = Vector2i.DOWN
 var target_cell: Vector2i = Vector2i.ZERO
 var ground_layer: TileMapLayer
-var movement_locked := false
 
 var _walk_frame_index := 0
 var _walk_frame_timer := 0.0
 var _placeholder_texture: Texture2D
 var _last_inspected_cell := Vector2i(999999, 999999)
+var _dialogue_locked := false
+var _ui_locked := false
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var facing_indicator: Sprite2D = $FacingIndicator
@@ -23,6 +24,7 @@ func _ready() -> void:
 	add_to_group("player")
 	_placeholder_texture = ArtDefaults.player_placeholder(art_data)
 	EventBus.dialogue_active_changed.connect(_on_dialogue_active_changed)
+	EventBus.ui_panel_changed.connect(_on_ui_panel_changed)
 	EventBus.crop_planted.connect(_on_crop_state_changed)
 	EventBus.crop_grew.connect(_on_crop_grew)
 	EventBus.crop_harvested.connect(_on_crop_harvested)
@@ -31,7 +33,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if movement_locked:
+	if _is_control_locked():
 		velocity = Vector2.ZERO
 		move_and_slide()
 		_update_sprite(Vector2.ZERO, delta)
@@ -57,7 +59,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_input(_event: InputEvent) -> void:
-	if movement_locked:
+	if _is_control_locked():
 		return
 	if Input.is_action_just_pressed("interact") and ground_layer != null:
 		update_target_cell()
@@ -176,8 +178,16 @@ func _update_facing_indicator() -> void:
 	facing_indicator.position = Vector2(facing) * 17.0
 
 
+func _is_control_locked() -> bool:
+	return _dialogue_locked or _ui_locked
+
+
 func _on_dialogue_active_changed(active: bool) -> void:
-	movement_locked = active
+	_dialogue_locked = active
+
+
+func _on_ui_panel_changed(active_panel: StringName) -> void:
+	_ui_locked = active_panel != &""
 
 
 func _on_crop_state_changed(cell: Vector2i, _crop_id: StringName) -> void:

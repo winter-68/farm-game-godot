@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/world/player/player.tscn" id="1_player"]
 [ext_resource type="TileSet" path="res://resources/tiles/placeholder_tileset.tres" id="2_tileset"]
@@ -10,9 +10,33 @@
 [ext_resource type="PackedScene" path="res://scenes/world/fishing_spot.tscn" id="8_fishing_spot"]
 [ext_resource type="PackedScene" path="res://scenes/world/world_entrance.tscn" id="9_entrance"]
 [ext_resource type="PackedScene" path="res://scenes/world/water_source.tscn" id="10_water_source"]
+[ext_resource type="Texture2D" path="res://assets/sprites/world/exterior_map_art.png" id="11_decor"]
+[ext_resource type="PackedScene" path="res://scenes/world/interiors/home_interior.tscn" id="12_home"]
+[ext_resource type="PackedScene" path="res://scenes/world/interiors/kitchen_interior.tscn" id="13_kitchen"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_highlight"]
 size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pond"]
+size = Vector2(192, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_house"]
+size = Vector2(288, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shop"]
+size = Vector2(240, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kitchen"]
+size = Vector2(240, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_farm_top"]
+size = Vector2(192, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_farm_side"]
+size = Vector2(16, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_farm_bottom"]
+size = Vector2(416, 16)
 
 [node name="World" type="Node2D"]
 script = ExtResource("3_world")
@@ -23,6 +47,11 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAA
 
 [node name="FarmLayer" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_tileset")
+
+[node name="ExteriorDecor" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("11_decor")
+centered = false
 
 [node name="CropsRoot" type="Node2D" parent="."]
 script = ExtResource("4_crop_view")
@@ -82,7 +111,7 @@ theme_override_colors/font_color = Color(0.72, 0.92, 1, 1)
 theme_override_colors/font_outline_color = Color(0.02, 0.04, 0.08, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 13
-text = "鱼塘"
+text = "池塘"
 horizontal_alignment = 1
 
 [node name="PondB" type="ColorRect" parent="Landmarks"]
@@ -101,7 +130,7 @@ theme_override_colors/font_color = Color(0.72, 0.92, 1, 1)
 theme_override_colors/font_outline_color = Color(0.02, 0.04, 0.08, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 13
-text = "鱼塘"
+text = "池塘"
 horizontal_alignment = 1
 
 [node name="PondAEdge" type="ColorRect" parent="Landmarks"]
@@ -169,7 +198,7 @@ theme_override_colors/font_color = Color(1, 0.88, 0.68, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.02, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 13
-text = "家（预留）"
+text = "家"
 horizontal_alignment = 1
 
 [node name="ShopShadow" type="ColorRect" parent="Landmarks"]
@@ -216,7 +245,7 @@ theme_override_colors/font_color = Color(1, 0.95, 0.68, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.06, 0.02, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 13
-text = "商店（预留）"
+text = "商店"
 horizontal_alignment = 1
 
 [node name="KitchenShadow" type="ColorRect" parent="Landmarks"]
@@ -263,7 +292,7 @@ theme_override_colors/font_color = Color(1, 0.82, 0.96, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.02, 0.07, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 13
-text = "厨房（预留）"
+text = "厨房"
 horizontal_alignment = 1
 
 [node name="VillageLabel" type="Label" parent="Landmarks"]
@@ -278,19 +307,106 @@ theme_override_font_sizes/font_size = 13
 text = "村口 / NPC 活动区"
 horizontal_alignment = 1
 
+[node name="ObstacleColliders" type="Node2D" parent="."]
+
+[node name="PondACollider" type="StaticBody2D" parent="ObstacleColliders"]
+position = Vector2(176, 704)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/PondACollider"]
+shape = SubResource("RectangleShape2D_pond")
+
+[node name="PondBCollider" type="StaticBody2D" parent="ObstacleColliders"]
+position = Vector2(1112, 168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/PondBCollider"]
+shape = SubResource("RectangleShape2D_pond")
+
+[node name="HouseCollider" type="StaticBody2D" parent="ObstacleColliders"]
+position = Vector2(640, 208)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/HouseCollider"]
+shape = SubResource("RectangleShape2D_house")
+
+[node name="ShopCollider" type="StaticBody2D" parent="ObstacleColliders"]
+position = Vector2(984, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/ShopCollider"]
+shape = SubResource("RectangleShape2D_shop")
+
+[node name="KitchenCollider" type="StaticBody2D" parent="ObstacleColliders"]
+position = Vector2(296, 352)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/KitchenCollider"]
+shape = SubResource("RectangleShape2D_kitchen")
+
+[node name="FarmBoundary" type="Node2D" parent="ObstacleColliders"]
+
+[node name="TopLeft" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
+position = Vector2(528, 496)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/TopLeft"]
+shape = SubResource("RectangleShape2D_farm_top")
+
+[node name="TopRight" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
+position = Vector2(752, 496)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/TopRight"]
+shape = SubResource("RectangleShape2D_farm_top")
+
+[node name="Left" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
+position = Vector2(432, 616)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/Left"]
+shape = SubResource("RectangleShape2D_farm_side")
+
+[node name="Right" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
+position = Vector2(848, 616)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/Right"]
+shape = SubResource("RectangleShape2D_farm_side")
+
+[node name="Bottom" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
+position = Vector2(640, 736)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/Bottom"]
+shape = SubResource("RectangleShape2D_farm_bottom")
+
 [node name="ShopEntrance" parent="." instance=ExtResource("9_entrance")]
 position = Vector2(984, 504)
 prompt_text = "按 E 商店"
 
 [node name="SleepEntrance" parent="." instance=ExtResource("9_entrance")]
 position = Vector2(640, 304)
-action = 1
-prompt_text = "按 E 睡觉"
+action = 3
+prompt_text = "按 E 进家"
 
 [node name="KitchenEntrance" parent="." instance=ExtResource("9_entrance")]
 position = Vector2(296, 456)
-action = 2
-prompt_text = "按 E 厨房"
+action = 4
+prompt_text = "按 E 进厨房"
+
+[node name="FarmEntrance" type="Node2D" parent="Landmarks"]
+position = Vector2(640, 480)
+
+[node name="Marker" type="ColorRect" parent="Landmarks/FarmEntrance"]
+offset_left = -32.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
+mouse_filter = 2
+color = Color(1, 0.88, 0.25, 0.55)
+
+[node name="Label" type="Label" parent="Landmarks/FarmEntrance"]
+offset_left = -48.0
+offset_top = -32.0
+offset_right = 48.0
+offset_bottom = -10.0
+theme_override_colors/font_color = Color(1, 0.95, 0.62, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.01, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 11
+text = "农田入口"
+horizontal_alignment = 1
 
 [node name="FishingSpotA" parent="." instance=ExtResource("8_fishing_spot")]
 position = Vector2(176, 720)
@@ -301,12 +417,42 @@ position = Vector2(1112, 184)
 [node name="WaterSourceA" parent="." instance=ExtResource("10_water_source")]
 position = Vector2(304, 720)
 
+[node name="WaterSourceALabel" type="Label" parent="Landmarks"]
+offset_left = 280.0
+offset_top = 694.0
+offset_right = 340.0
+offset_bottom = 710.0
+theme_override_colors/font_color = Color(0.72, 0.92, 1, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.04, 0.08, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 9
+text = "取水点"
+horizontal_alignment = 1
+
 [node name="WaterSourceB" parent="." instance=ExtResource("10_water_source")]
 position = Vector2(984, 184)
+
+[node name="WaterSourceBLabel" type="Label" parent="Landmarks"]
+offset_left = 956.0
+offset_top = 158.0
+offset_right = 1016.0
+offset_bottom = 174.0
+theme_override_colors/font_color = Color(0.72, 0.92, 1, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.04, 0.08, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 9
+text = "取水点"
+horizontal_alignment = 1
 
 [node name="TileHighlight" type="Sprite2D" parent="."]
 modulate = Color(1, 0.933333, 0.282353, 0.45)
 texture = SubResource("PlaceholderTexture2D_highlight")
+
+[node name="HomeInterior" parent="." instance=ExtResource("12_home")]
+visible = false
+
+[node name="KitchenInterior" parent="." instance=ExtResource("13_kitchen")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(640, 456)

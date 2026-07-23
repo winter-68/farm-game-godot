@@ -13,6 +13,8 @@ signal inventory_changed()
 signal selected_slot_changed(index: int)
 signal stamina_changed(current: float, maximum: float)
 signal watering_can_changed(current: int, maximum: int)
+signal gameplay_notice(message: String)
+signal ui_panel_changed(active_panel: StringName)
 
 signal tile_tilled(cell: Vector2i)
 signal tile_watered(cell: Vector2i)

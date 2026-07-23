@@ -1,8 +1,8 @@
 extends Control
 
 const ArtDefaults := preload("res://scripts/art/art_defaults.gd")
-const PANEL_COLOR := Color(0.06, 0.07, 0.08, 0.92)
-const CARD_COLOR := Color(0.10, 0.12, 0.14, 0.95)
+const PANEL_COLOR := Color(0.055, 0.10, 0.07, 0.94)
+const CARD_COLOR := Color(0.075, 0.14, 0.09, 0.96)
 const LOCKED_MODULATE := Color(0.5, 0.5, 0.5, 1.0)
 const UNLOCK_COLOR := Color(0.92, 0.82, 0.35, 1.0)
 const ITEM_NAMES := {
@@ -55,14 +55,27 @@ func _ready() -> void:
 	EventBus.fish_discovered.connect(_on_changed)
 	EventBus.recipe_discovered.connect(_on_recipe_discovered)
 	EventBus.achievement_unlocked.connect(_on_changed)
+	EventBus.ui_panel_changed.connect(_on_ui_panel_changed)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("toggle_collection"):
-		visible = not visible
-		if visible:
-			_refresh()
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_collection") and not event.is_echo():
+		_set_open(not visible)
 		get_viewport().set_input_as_handled()
+
+
+func _set_open(open: bool) -> void:
+	visible = open
+	if open:
+		_refresh()
+		UIStateManager.open_panel(&"collection")
+	else:
+		UIStateManager.close_panel(&"collection")
+
+
+func _on_ui_panel_changed(active_panel: StringName) -> void:
+	if visible and active_panel != &"collection":
+		visible = false
 
 
 func _on_changed(_a = null, _b = null) -> void:
@@ -169,7 +182,7 @@ func _set_panel_style() -> void:
 	var style := StyleBoxFlat.new()
 	style.bg_color = PANEL_COLOR
 	style.set_border_width_all(1)
-	style.border_color = Color(0.5, 0.56, 0.62, 1.0)
+	style.border_color = Color(0.42, 0.68, 0.42, 1.0)
 	panel.add_theme_stylebox_override("panel", style)
 
 

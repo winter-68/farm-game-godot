@@ -30,6 +30,7 @@ func _ready() -> void:
 	_set_panel_style()
 	EventBus.request_open_cooking.connect(_open)
 	EventBus.inventory_changed.connect(_on_inventory_changed)
+	EventBus.ui_panel_changed.connect(_on_ui_panel_changed)
 	close_button.pressed.connect(_close)
 	_refresh()
 
@@ -41,13 +42,26 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _open() -> void:
-	visible = true
+	_set_open(true)
 	status_label.text = "选择一道菜开始制作"
-	_refresh()
 
 
 func _close() -> void:
-	visible = false
+	_set_open(false)
+
+
+func _set_open(open: bool) -> void:
+	visible = open
+	if open:
+		_refresh()
+		UIStateManager.open_panel(&"cooking")
+	else:
+		UIStateManager.close_panel(&"cooking")
+
+
+func _on_ui_panel_changed(active_panel: StringName) -> void:
+	if visible and active_panel != &"cooking":
+		visible = false
 
 
 func _refresh() -> void:
@@ -153,10 +167,10 @@ func _set_static_texts() -> void:
 
 func _set_panel_style() -> void:
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.06, 0.07, 0.08, 0.9)
+	style.bg_color = Color(0.055, 0.10, 0.07, 0.94)
 	style.border_width_left = 1
 	style.border_width_top = 1
 	style.border_width_right = 1
 	style.border_width_bottom = 1
-	style.border_color = Color(0.58, 0.36, 0.58, 1.0)
+	style.border_color = Color(0.42, 0.68, 0.42, 1.0)
 	panel.add_theme_stylebox_override("panel", style)

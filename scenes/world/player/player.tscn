@@ -1,19 +1,23 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/player.gd" id="1_player"]
 [ext_resource type="Resource" path="res://resources/player_art_default.tres" id="2_player_art"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_player"]
-size = Vector2(16, 24)
+size = Vector2(32, 48)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_indicator"]
 size = Vector2(6, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
+size = Vector2(12, 10)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_player")
 art_data = ExtResource("2_player_art")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
 texture = SubResource("PlaceholderTexture2D_player")
 modulate = Color(0.337255, 0.768627, 0.45098, 1)
 
@@ -21,6 +25,12 @@ modulate = Color(0.337255, 0.768627, 0.45098, 1)
 texture = SubResource("PlaceholderTexture2D_indicator")
 modulate = Color(1, 0.843137, 0.282353, 1)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_feet")
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
+enabled = true
+current = true
+position = Vector2(0, -8)
+position_smoothing_enabled = false

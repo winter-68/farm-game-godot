@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/world/world.tscn" id="1_world"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/fishing_minigame.tscn" id="10_fishing"]
 [ext_resource type="PackedScene" path="res://scenes/ui/cooking_ui.tscn" id="11_cooking"]
 [ext_resource type="PackedScene" path="res://scenes/ui/help_overlay.tscn" id="12_help"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="13_pause"]
 
 [node name="Main" type="Node"]
 
@@ -40,3 +41,5 @@
 [node name="CollectionToast" parent="UI" instance=ExtResource("8_toast")]
 
 [node name="HelpOverlay" parent="UI" instance=ExtResource("12_help")]
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("13_pause")]
