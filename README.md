@@ -6,7 +6,7 @@ Project Sprout is a small cozy farming game made with Godot.
 
 Download the Windows build here:
 
-[ProjectSprout-Windows.zip](downloads/ProjectSprout-Windows.zip)
+[ProjectSprout-Windows.zip](https://github.com/winter-68/farm-game-godot/raw/main/downloads/ProjectSprout-Windows.zip)
 
 After downloading:
 
