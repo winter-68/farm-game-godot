@@ -15,6 +15,7 @@ saves/
 
 # Temporary / build artifacts
 tmp/
+builds/
 *.tmp
 *.log
 export_presets.cfg
