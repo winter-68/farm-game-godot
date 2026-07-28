@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_main_menu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/menu_farm_dawn.png" id="2_menu_background"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -11,46 +12,186 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_main_menu")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+color = Color(0.045, 0.11, 0.08, 1)
+
+[node name="FarmBackdrop" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_menu_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ReadabilityShade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.05, 0.025, 0.28)
+
+[node name="HorizonGlow" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 194.0
+offset_bottom = 276.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.16, 0.31, 0.17, 0.72)
+
+[node name="TopRule" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 24.0
+offset_bottom = 26.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.76, 0.60, 0.28, 0.75)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Panel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(160, 116)
+custom_minimum_size = Vector2(268, 250)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
+[node name="Kicker" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.74, 0.38, 1)
+theme_override_font_sizes/font_size = 9
+text = "一片属于你的土地"
+horizontal_alignment = 1
+
 [node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.94, 1, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.16, 0.08, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
 text = "Project Sprout"
 horizontal_alignment = 1
 
-[node name="NewGameButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
+[node name="Subtitle" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "新游戏"
+theme_override_colors/font_color = Color(0.72, 0.84, 0.68, 1)
+theme_override_font_sizes/font_size = 9
+text = "种下、照料，然后慢慢收获。"
+horizontal_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.46, 0.59, 0.34, 0.7)
+
+[node name="NewGameButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "开始耕种"
 
 [node name="ContinueButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 27)
+layout_mode = 2
+text = "继续农场"
+
+[node name="ControlsButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-text = "继续"
+text = "操作说明"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-text = "退出"
+text = "退出游戏"
+
+[node name="ControlsCard" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.0
+offset_top = -102.0
+offset_right = 145.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ControlsCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlsCard/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Title" type="Label" parent="ControlsCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.82, 0.46, 1)
+theme_override_font_sizes/font_size = 15
+text = "新手操作"
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="ControlsCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87, 0.94, 0.82, 1)
+theme_override_font_sizes/font_size = 9
+text = "WASD  移动\n鼠标左键 / J  使用当前工具\nE / 空格  互动\nTab  背包\nEsc  菜单"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="ControlsCard/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "知道了"
+
+[node name="Footer" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.56, 0.69, 0.50, 1)
+theme_override_font_sizes/font_size = 8
+text = "一座慢慢长大的小农场"
+horizontal_alignment = 1

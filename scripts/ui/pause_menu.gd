@@ -64,6 +64,13 @@ func _refresh_fullscreen_text() -> void:
 func _set_panel_style() -> void:
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.055, 0.10, 0.07, 0.96)
-	style.set_border_width_all(1)
-	style.border_color = Color(0.42, 0.68, 0.42, 1.0)
+	style.set_border_width_all(2)
+	style.border_color = Color(0.76, 0.61, 0.29, 1.0)
+	style.corner_radius_top_left = 7
+	style.corner_radius_top_right = 7
+	style.corner_radius_bottom_left = 7
+	style.corner_radius_bottom_right = 7
+	style.shadow_color = Color(0, 0, 0, 0.40)
+	style.shadow_size = 5
+	style.shadow_offset = Vector2(0, 3)
 	panel.add_theme_stylebox_override("panel", style)

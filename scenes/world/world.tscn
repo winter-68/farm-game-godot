@@ -10,33 +10,12 @@
 [ext_resource type="PackedScene" path="res://scenes/world/fishing_spot.tscn" id="8_fishing_spot"]
 [ext_resource type="PackedScene" path="res://scenes/world/world_entrance.tscn" id="9_entrance"]
 [ext_resource type="PackedScene" path="res://scenes/world/water_source.tscn" id="10_water_source"]
-[ext_resource type="Texture2D" path="res://assets/sprites/world/exterior_map_art.png" id="11_decor"]
+[ext_resource type="Texture2D" path="res://assets/sprites/world/exterior_map_art_v2.png" id="11_decor"]
 [ext_resource type="PackedScene" path="res://scenes/world/interiors/home_interior.tscn" id="12_home"]
 [ext_resource type="PackedScene" path="res://scenes/world/interiors/kitchen_interior.tscn" id="13_kitchen"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_highlight"]
 size = Vector2(16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pond"]
-size = Vector2(192, 176)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_house"]
-size = Vector2(288, 160)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_shop"]
-size = Vector2(240, 160)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kitchen"]
-size = Vector2(240, 160)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_farm_top"]
-size = Vector2(192, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_farm_side"]
-size = Vector2(16, 240)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_farm_bottom"]
-size = Vector2(416, 16)
 
 [node name="World" type="Node2D"]
 script = ExtResource("3_world")
@@ -52,6 +31,7 @@ tile_set = ExtResource("2_tileset")
 z_index = -10
 texture = ExtResource("11_decor")
 centered = false
+scale = Vector2(0.807062, 0.806452)
 
 [node name="CropsRoot" type="Node2D" parent="."]
 script = ExtResource("4_crop_view")
@@ -61,6 +41,7 @@ script = ExtResource("5_npc_spawner")
 npc_datas = Array[Resource]([ExtResource("6_villager_a"), ExtResource("7_villager_b")])
 
 [node name="Landmarks" type="Node2D" parent="."]
+visible = false
 
 [node name="MainPathVertical" type="ColorRect" parent="Landmarks"]
 offset_left = 616.0
@@ -309,79 +290,17 @@ horizontal_alignment = 1
 
 [node name="ObstacleColliders" type="Node2D" parent="."]
 
-[node name="PondACollider" type="StaticBody2D" parent="ObstacleColliders"]
-position = Vector2(176, 704)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/PondACollider"]
-shape = SubResource("RectangleShape2D_pond")
-
-[node name="PondBCollider" type="StaticBody2D" parent="ObstacleColliders"]
-position = Vector2(1112, 168)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/PondBCollider"]
-shape = SubResource("RectangleShape2D_pond")
-
-[node name="HouseCollider" type="StaticBody2D" parent="ObstacleColliders"]
-position = Vector2(640, 208)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/HouseCollider"]
-shape = SubResource("RectangleShape2D_house")
-
-[node name="ShopCollider" type="StaticBody2D" parent="ObstacleColliders"]
-position = Vector2(984, 400)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/ShopCollider"]
-shape = SubResource("RectangleShape2D_shop")
-
-[node name="KitchenCollider" type="StaticBody2D" parent="ObstacleColliders"]
-position = Vector2(296, 352)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/KitchenCollider"]
-shape = SubResource("RectangleShape2D_kitchen")
-
-[node name="FarmBoundary" type="Node2D" parent="ObstacleColliders"]
-
-[node name="TopLeft" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
-position = Vector2(528, 496)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/TopLeft"]
-shape = SubResource("RectangleShape2D_farm_top")
-
-[node name="TopRight" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
-position = Vector2(752, 496)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/TopRight"]
-shape = SubResource("RectangleShape2D_farm_top")
-
-[node name="Left" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
-position = Vector2(432, 616)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/Left"]
-shape = SubResource("RectangleShape2D_farm_side")
-
-[node name="Right" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
-position = Vector2(848, 616)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/Right"]
-shape = SubResource("RectangleShape2D_farm_side")
-
-[node name="Bottom" type="StaticBody2D" parent="ObstacleColliders/FarmBoundary"]
-position = Vector2(640, 736)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleColliders/FarmBoundary/Bottom"]
-shape = SubResource("RectangleShape2D_farm_bottom")
-
 [node name="ShopEntrance" parent="." instance=ExtResource("9_entrance")]
-position = Vector2(984, 504)
+position = Vector2(968, 516)
 prompt_text = "按 E 商店"
 
 [node name="SleepEntrance" parent="." instance=ExtResource("9_entrance")]
-position = Vector2(640, 304)
+position = Vector2(640, 342)
 action = 3
 prompt_text = "按 E 进家"
 
 [node name="KitchenEntrance" parent="." instance=ExtResource("9_entrance")]
-position = Vector2(296, 456)
+position = Vector2(330, 462)
 action = 4
 prompt_text = "按 E 进厨房"
 
@@ -409,13 +328,13 @@ text = "农田入口"
 horizontal_alignment = 1
 
 [node name="FishingSpotA" parent="." instance=ExtResource("8_fishing_spot")]
-position = Vector2(176, 720)
+position = Vector2(300, 540)
 
 [node name="FishingSpotB" parent="." instance=ExtResource("8_fishing_spot")]
-position = Vector2(1112, 184)
+position = Vector2(1140, 184)
 
 [node name="WaterSourceA" parent="." instance=ExtResource("10_water_source")]
-position = Vector2(304, 720)
+position = Vector2(332, 600)
 
 [node name="WaterSourceALabel" type="Label" parent="Landmarks"]
 offset_left = 280.0
@@ -430,7 +349,7 @@ text = "取水点"
 horizontal_alignment = 1
 
 [node name="WaterSourceB" parent="." instance=ExtResource("10_water_source")]
-position = Vector2(984, 184)
+position = Vector2(904, 184)
 
 [node name="WaterSourceBLabel" type="Label" parent="Landmarks"]
 offset_left = 956.0
